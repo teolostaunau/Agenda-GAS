@@ -1,0 +1,366 @@
+<script>
+
+    window.addEventListener('scroll', function () {
+        if (this.window.scrollY > 500) {
+            document.getElementById('botonSubir').style.transform = "scale(1)";
+        }
+        if (this.window.scrollY <= 500) {
+            document.getElementById('botonSubir').style.transform = "scale(0)";
+        }
+    })
+
+    function subirArriba() {
+        document.body.scrollTop = 0;
+        document.documentElement.scrollTop = 0;
+    }
+
+    function limpiar()
+    {
+        eliminarTabla();
+        eliminarTarjetas();
+        crearLoader('divContactos');        
+    }
+
+    function insertarContacto() {
+
+        limpiar();
+
+        // Obtener Datos
+        let dni = document.getElementById('dni').value;
+        let nombre = document.getElementById('nombre').value;
+        let correo = document.getElementById('correo').value;
+        let telefono = document.getElementById('telefono').value;
+        let boleto = document.getElementById('boleto').value;
+
+        // Cerrar Modal
+        bootstrap.Modal.getInstance(document.getElementById('crearContactoModal')).hide();
+
+        google.script.run
+            .withSuccessHandler(contactoInsertadoCorrectamente)
+            .withFailureHandler(contactoInsertadoError)
+            .insertarContacto(dni, nombre, correo, telefono, boleto);
+    }
+
+    function contactoInsertadoCorrectamente() {
+        // Eliminamos datos de los Inputs
+        document.getElementById('dni').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('correo').value = '';
+        document.getElementById('telefono').value = '';
+
+        // Insertar Notificación
+        crearNotificacionContacto('Contacto insertado correctamente', 'CONTACTO OK');
+
+        // Eliminar Loader
+        eliminarLoader();
+
+        // Mostrar Tabla
+        crearTablaContactos();
+    }
+
+    function contactoInsertadoError() {
+        // Mostrar Notificación
+        crearNotificacionError('No se ha podido insertar Contacto', 'ERROR');
+
+        // Eliminar Loader
+        eliminarLoader();
+
+        // Mostrar Tabla
+        crearTablaContactos();
+    }
+
+    function crearTablaContactos() {
+        limpiar();
+
+        google.script.run
+            .withSuccessHandler(crearTablaContactosCorrectamente)
+            .withFailureHandler(crearTablaContactosError)
+            .obtenerContactos();
+    }
+
+    function crearTablaContactosCorrectamente(obj) {
+
+        tabla = document.createElement('table');
+        tabla.id = 'tablaContactos';
+
+        let tablaHeader = document.createElement('thead');
+        let tablaBody = document.createElement('tbody');
+
+        // Header de la tabla
+        let primeraFila = document.createElement('tr');
+        for (let i = 0; i < obj[0].length; i++) {
+            let celda = document.createElement('td');
+            celda.textContent = obj[0][i];
+            primeraFila.appendChild(celda);
+        }
+
+        // Agregar columna Opciones
+        let celdaOpciones = document.createElement('td');
+        celdaOpciones.textContent = 'OPCIONES';
+        celdaOpciones.classList.add('text-center');
+        primeraFila.appendChild(celdaOpciones);
+
+        // Agregar la fila al Header de la tabla
+        tablaHeader.appendChild(primeraFila);
+        tabla.appendChild(tablaHeader);
+
+        // Body de la tabla
+        for (let i = 1; i < obj.length; i++) {
+            let fila = document.createElement('tr');
+            for (let j = 0; j < obj[i].length; j++) {
+                let celda = document.createElement('td');
+                celda.textContent = obj[i][j];
+                // Si es la columna de la foto
+                if (j == 5) {
+                    celda.textContent = '';
+                    let imagen = document.createElement('img');
+                    imagen.classList.add('img-fluid', 'rounded');
+                    imagen.src = obj[i][j];
+                    celda.appendChild(imagen);
+                }
+                fila.appendChild(celda);
+            }
+            // Agregar Botones
+            let objContacto ={
+                dni: obj[i][0],
+                nombre: obj[i][1],
+                correo: obj[i][2],
+                telefono: obj[i][3],
+                boleto: obj[i][4],                                                
+                foto: obj[i][5]                
+            }
+            // fila.appendChild(crearCeldaBotones(i + 1, obj[i]));
+            fila.appendChild(crearCeldaBotones(i + 1, objContacto));
+            tablaBody.appendChild(fila);
+        }
+
+
+        // Agregamos clases a la cabecera
+        tablaHeader.classList.add('table-dark');
+        // Agregamos el cuerpo a la tabla
+        tabla.appendChild(tablaBody)
+        // Agregamos clases a la tabla
+        tabla.classList.add('table', 'table-striped', 'border', 'border-4');
+        // Agregamos tabla a la página
+        document.getElementById('divContactos').appendChild(tabla);
+
+        // Mostrar notificación de OK
+        crearNotificacionOK('Contactos obtenidos correctamente', 'Todo en orden');
+
+        // Eliminamos Loader
+        eliminarLoader();
+
+    }
+
+    function crearCeldaBotones(numFila, datosContacto) {
+        // Crear celda
+        let celda = document.createElement('td');
+        celda.classList.add('text-center');
+
+        // Crear botón Borrar
+        let botonBorrar = document.createElement('button');
+        botonBorrar.onclick = () => borrarContacto(numFila);
+        botonBorrar.classList.add('btn', 'btn-danger', 'm-1');
+        //botonBorrar.textContent = 'Borrar';
+
+        // Crear icono Borrar
+        let iconoBorrar = document.createElement('i');
+        iconoBorrar.classList.add('bi', 'bi-trash');
+        botonBorrar.appendChild(iconoBorrar);
+
+        // Crear botón Modificar
+        let botonModificar = document.createElement('button');
+        botonModificar.onclick = () => abrirModalModificarContacto(numFila, datosContacto);
+        botonModificar.classList.add('btn', 'btn-warning', 'm-1');
+        //botonModificar.textContent = 'Modificar';
+
+        // Crear icono Modificar
+        let iconoModificar = document.createElement('i');
+        iconoModificar.classList.add('bi', 'bi-pencil-square');
+        botonModificar.appendChild(iconoModificar);
+
+        // Agregar botones a la celda
+        celda.appendChild(botonBorrar);
+        celda.appendChild(botonModificar);
+
+        return celda;
+    }
+
+    function abrirModalCrearContacto() {
+        // Crear botón Crear
+        let boton = document.getElementById('botonCrearModificar');
+        boton.textContent = 'Crear Contacto';
+        boton.classList = '';
+        boton.classList.add('btn', 'btn-success');
+
+        // Cambiar título de Modal
+        document.getElementById('tituloModal').textContent = 'Crear Contacto';
+
+        // Modificar submit
+        document.getElementById('formulario').onsubmit = () => insertarContacto();
+
+        // Obtener datos
+        document.getElementById('dni').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('correo').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('boleto').value = '';
+
+        // Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('crearContactoModal')).show();
+    }
+
+    function abrirModalModificarContacto(numFila, datosContacto) {
+        // Crear botón Modificar
+        let boton = document.getElementById('botonCrearModificar');
+        boton.textContent = 'Modificar Contacto';
+        boton.classList = '';
+        boton.classList.add('btn', 'btn-warning');
+
+        // Cambiar título de Modal
+        document.getElementById('tituloModal').textContent = 'Modificar Contacto';
+
+        // Modificar submit
+        document.getElementById('formulario').onsubmit = () => modificarContacto(numFila);
+
+        // Obtener datos
+        document.getElementById('dni').value = datosContacto.dni // datosContacto[0];
+        document.getElementById('nombre').value = datosContacto.nombre // datosContacto[1];
+        document.getElementById('correo').value = datosContacto.correo // datosContacto[2];
+        document.getElementById('telefono').value = datosContacto.telefono // datosContacto[3];
+        document.getElementById('boleto').value = datosContacto.boleto // datosContacto[4];
+
+        // Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('crearContactoModal')).show();
+    }
+
+    function modificarContacto(numFila) {
+        limpiar();
+        
+        // Cerrar Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('crearContactoModal')).hide();
+
+        // Obtener Nuevos datos 
+        let dni = document.getElementById('dni').value;
+        let nombre = document.getElementById('nombre').value;
+        let correo = document.getElementById('correo').value;
+        let telefono = document.getElementById('telefono').value;
+        let boleto = document.getElementById('boleto').value;
+
+        google.script.run
+            .withSuccessHandler(contactoModificadoCorrectamente)
+            .withFailureHandler(contactoModificadoError)
+            .modificarContacto(numFila, { dni, nombre, correo, telefono, boleto });
+    }
+
+    function contactoModificadoCorrectamente() {
+        crearNotificacionContacto('Contacto Modificado correctamente', 'MODIFICADO OK');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+    function contactoModificadoError() {
+        crearNotificacionError('No se ha podido Modificar el Contacto', 'ERROR');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+    function borrarContacto(numFila) {
+        limpiar();
+
+        google.script.run
+            .withSuccessHandler(contactoBorradoCorrectamente)
+            .withFailureHandler(contactoBorradoError)
+            .borrarContacto(numFila);
+    }
+
+    function contactoBorradoCorrectamente() {
+        crearNotificacionBorrar('Contacto eliminado correctamente', 'BORRADO OK');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+    function contactoBorradoError() {
+        crearNotificacionError('No se ha podido borrar el Contacto', 'ERROR');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+    function crearTablaContactosError() {
+        // Mostrar notificación de Error
+        crearNotificacionError('Problemas al cargar Contactos', 'ERROR');
+        // Eliminamos Loader
+        eliminarLoader();
+    }
+
+    function crearLoader(elementoPadre) {
+        eliminarLoader();
+        let loader = document.createElement('div');
+        loader.id = 'loader';
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.classList.add('lds-facebook');
+        document.getElementById(elementoPadre).appendChild(loader);
+    }
+
+    function eliminarLoader() {
+        let loader = document.getElementById('loader');
+        if (loader) loader.remove();
+    }
+
+    function eliminarTabla() {
+        let tabla = document.getElementById('tablaContactos');
+        if (tabla) tabla.remove();
+    }
+
+    function eliminarTarjetas() {
+        let tarjeta = document.getElementById('tarjetasContactos');
+        if (tarjeta) tarjeta.remove();
+    }
+
+    function importarContactos() {
+        limpiar();
+
+        google.script.run
+            .withSuccessHandler(contactosImportadosCorrectamente)
+            .withFailureHandler(contactosImportadosError)
+            .importarContactos();
+    }
+
+    function contactosImportadosCorrectamente() {
+        crearNotificacionBorrar('Contactos importados correctamente', 'IMPORTACIÓN OK');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+    function contactosImportadosError() {
+        crearNotificacionError('No se ha podido importar Contactos', 'ERROR');
+        eliminarLoader();
+        crearTablaContactos();
+    }
+
+
+</script>
+
+
+
+<!-- // Array.from(obj).forEach((filaActual,i) =>
+    // {
+    //     let fila =document.createElement('tr');
+    //     filaActual.forEach(celdaActual =>
+    //     {
+    //         let celda = document.createElement('td');
+    //         celda.textContent = celdaActual;
+    //         fila.appendChild(celda);
+    //     });
+    //     if(i == 0)
+    //     {
+    //         tablaHeader.appendChild(fila);
+    //         tabla.appendChild(tablaHeader);
+    //     }
+    //     else
+    //     {
+    //         tablaBody.appendChild(fila);
+    //     }
+    // }); -->
