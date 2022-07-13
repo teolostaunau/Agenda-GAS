@@ -1,0 +1,49 @@
+<script>
+    function abrirModalCrearContacto() {
+        // Crear botón Crear
+        let boton = document.getElementById('botonCrearModificar');
+        boton.textContent = 'Crear Contacto';
+        boton.classList = '';
+        boton.classList.add('btn', 'btn-success');
+
+        // Cambiar título de Modal
+        document.getElementById('tituloModal').textContent = 'Crear Contacto';
+
+        // Modificar submit
+        document.getElementById('formulario').onsubmit = () => insertarContacto();
+
+        // Obtener datos
+        document.getElementById('dni').value = '';
+        document.getElementById('nombre').value = '';
+        document.getElementById('correo').value = '';
+        document.getElementById('telefono').value = '';
+        document.getElementById('boleto').value = '';
+
+        // Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('crearContactoModal')).show();
+    }
+
+    function abrirModalModificarContacto(datosContacto) {
+        // Crear botón Modificar
+        let boton = document.getElementById('botonCrearModificar');
+        boton.textContent = 'Modificar Contacto';
+        boton.classList = '';
+        boton.classList.add('btn', 'btn-warning');
+
+        // Cambiar título de Modal
+        document.getElementById('tituloModal').textContent = 'Modificar Contacto';
+
+        // Modificar submit
+        document.getElementById('formulario').onsubmit = () => modificarContacto(datosContacto.fila);
+
+        // Obtener datos
+        document.getElementById('dni').value = datosContacto.dni // datosContacto[0];
+        document.getElementById('nombre').value = datosContacto.nombre // datosContacto[1];
+        document.getElementById('correo').value = datosContacto.correo // datosContacto[2];
+        document.getElementById('telefono').value = datosContacto.telefono // datosContacto[3];
+        document.getElementById('boleto').value = datosContacto.boleto // datosContacto[4];
+
+        // Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('crearContactoModal')).show();
+    }
+</script>
