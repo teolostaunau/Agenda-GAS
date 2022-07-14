@@ -21,8 +21,7 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
-    aria-hidden="true">
+  <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal" aria-hidden="true">
     <div class="modal-lg modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -31,33 +30,53 @@
         <!-- Formulario crear Contacto -->
         <form onsubmit="insertarContacto()" method="dialog" id="formulario">
           <div class="modal-body">
-            <!-- DNI y Nombres -->
+
             <div class="row mb-3">
-              <div class="col-4">
-                <label for="dni" class="form-label">Número DNI</label>
-                <input type="text" class="form-control" name="dni" id="dni" pattern="[\d]{8}" title="DNI debe tener 8 dígitos" required>
+              <!-- Parte Izquierda -->
+              <div class="col-6 d-flex flex-column">
+                <!-- DNI -->
+                <div class="mb-2">
+                  <label for="dni" class="form-label">Número DNI</label>
+                  <input type="text" class="form-control" name="dni" id="dni" pattern="[\d]{8}" title="DNI debe tener 8 dígitos" required>
+ 
+                </div>
+                <!-- Nombres y Apellidos -->
+                <div class="mb-2">
+                  <label for="nombre" class="form-label">Nombres y Apellidos</label>
+                  <input type="text" class="form-control" name="nombre" id="nombre" pattern="[\D]*" title="No puede contener números" required>
+  
+                </div>
+                <!-- Correo -->
+                <div class="input-group mb-2">
+                  <span class="input-group-text"><i class="bi bi-envelope-open"></i></span>
+                  <input type="email" class="form-control" name="correo" id="correo" required>   
+                </div>
+                <!-- Teléfono -->
+                <div class="input-group mb-2">
+                  <span class="input-group-text"><i class="bi bi-telephone"></i></span>
+                  <input type="tel" class="form-control" name="telefono" id="telefono" pattern="[\d]{9,11}" title="Teléfono debe tener de 9 a 11 dígitos" required>
+                </div>
+                <!-- Boleto -->
+                <div class="input-group mb-2">
+                  <label class="input-group-text" for="boleto">Tipo de Boleto</label>
+                  <select class="form-select" id="boleto">
+                    <option selected>Seleccione Boleto...</option>
+                    <option value="BOLETO GENERAL">Boleto General</option>
+                    <option value="BOLETO VIP">Boleto VIP</option>
+                  </select>   
+                </div>
+                <!-- Archivo de Foto -->
+                <div class="mb-2">
+                  <label for="imagen" class="form-label">Selecciona una foto para el contacto</label>
+                  <input type="file" accept="image/*" class="form-control" id="imagen" name="imagen">
+                </div>                                
               </div>
-              <div class="col-8">
-                <label for="nombre" class="form-label">Nombres y Apellidos</label>
-                <input type="text" class="form-control" name="nombre" id="nombre" pattern="[\D]*" title="No puede contener números" required>
+
+              <!-- Parte Derecha -->
+              <div class="col-6 d-flex justify-content-center align-items-center p-0">
+                <img class="img-fluid img-form" id="imgForm" alt="Foto de Contacto">
               </div>
-            </div>
-            <!-- Correo y Teléfono -->
-            <div class="input-group mb-3">
-              <span class="input-group-text"><i class="bi bi-envelope-open"></i></span>
-              <input type="email" class="form-control me-4" name="correo" id="correo" required>
-              <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-              <input type="tel" class="form-control" name="telefono" id="telefono" pattern="[\d]{9,11}" title="Teléfono debe tener de 9 a 11 dígitos" required>
-            </div>
-            <!-- Tipo de Boleto -->
-            <div class="input-group mb-3">
-              <label class="input-group-text" for="boleto">Tipo de Boleto</label>
-              <select class="form-select" id="boleto">
-                <option selected>Seleccione Boleto...</option>
-                <option value="BOLETO GENERAL">Boleto General</option>
-                <option value="BOLETO VIP">Boleto VIP</option>
-              </select>
-            </div>
+
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
