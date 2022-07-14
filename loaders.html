@@ -14,4 +14,38 @@
         let loader = document.getElementById('loader');
         if (loader) loader.remove();
     }
+
+    function crearLoaderImagen(elementoPadre)
+    {
+        let loader = document.createElement('div');
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.appendChild(document.createElement('div'));
+        loader.classList.add('lds-facebook');
+        elementoPadre.appendChild(loader);
+        return loader;
+    }
+
+    function crearLoaderLottie(elementoPadre, lottie)
+    {
+        eliminarLoader();
+
+        let loaderLottie = document.createElement('lottie-player');
+
+        // Agregar atributos
+        loaderLottie.setAttribute('src', lottie);
+        loaderLottie.setAttribute('background', 'transparent');
+        loaderLottie.setAttribute('speed', '1');
+        loaderLottie.style.width = '15rem';
+        loaderLottie.style.height = '15rem';
+        loaderLottie.autoplay = 'true';
+
+        let divLottie = document.createElement('div');
+        divLottie.appendChild(loaderLottie);
+        divLottie.id = 'loader';
+
+        // Agregar al DOM
+        document.getElementById(elementoPadre).appendChild(divLottie);
+
+    }
 </script>

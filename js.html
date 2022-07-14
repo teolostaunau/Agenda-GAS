@@ -1,4 +1,19 @@
 <script>
+    //
+    // CONSTANTES
+    //
+    const ICONO_CHECK = 'bi-check2-square';
+    const ICONO_PAPELERA = 'bi-trash';
+    const ICONO_CONTACTO = 'bi-person-plus-fill';
+    const ICONO_ERROR = 'bi-x-octagon';
+    const ICONO_ADVERTENCIA = 'bi-exclamation-square';
+
+    const LOTTIE_AVION = 'https://assets3.lottiefiles.com/packages/lf20_x62chJ.json';
+    const LOTTIE_CIRCULOS = 'https://assets5.lottiefiles.com/packages/lf20_Xho5ht.json';
+
+    //
+    // EVENTOS
+    //
 
     // Botón Subir
     window.addEventListener('scroll', function () {
@@ -15,6 +30,39 @@
         document.getElementById('imgForm').src = URL.createObjectURL(this.files[0])
     });
 
+    // Dragover
+    document.getElementById('imgForm').addEventListener('dragover', function(event)
+    {
+        event.preventDefault();        
+        this.style.filter = 'opacity(0%)';
+        document.getElementById('cajaIconoForm').style.display = 'flex';
+    });
+
+    // Dragleave
+    document.getElementById('imgForm').addEventListener('dragleave', function(event)
+    {
+        this.style.filter = 'opacity(100%)';
+        document.getElementById('cajaIconoForm').style.display = 'none';        
+    });
+
+    // Drop
+    document.getElementById('imgForm').addEventListener('drop', function(event)
+    {
+        event.preventDefault();
+        let ficheros = event.dataTransfer.files;
+
+        // Pasar archivos al Input
+        document.getElementById('imagen').files = ficheros;
+
+        // Crear URL para mostrar imagen
+        document.getElementById('imgForm').src = URL.createObjectURL(ficheros[0]);
+
+        // Mostrar imagen y quitar zona de carga
+        this.style.filter = 'opacity(100%)';
+        document.getElementById('cajaIconoForm').style.display = 'none';                
+    });
+
+
     function subirArriba() {
         document.body.scrollTop = 0;
         document.documentElement.scrollTop = 0;
@@ -23,7 +71,8 @@
     function limpiar() {
         eliminarTabla();
         eliminarTarjetas();
-        crearLoader('divContactos');
+        // crearLoader('divContactos');  -- Icono de carga
+        crearLoaderLottie('divContactos', LOTTIE_AVION);
     }
 
     // INSERTAR CONTACTO
