@@ -11,7 +11,7 @@
                 correo: datos[i][2],
                 telefono: datos[i][3],
                 boleto: datos[i][4],
-                foto: datos[i][5],
+                imagen: datos[i][5],
                 fila: i+1
             };
             contactos.push(contacto);
@@ -105,7 +105,7 @@
             fila.appendChild(crearCelda(contacto.correo));
             fila.appendChild(crearCelda(contacto.telefono));
             fila.appendChild(crearCelda(contacto.boleto));
-            fila.appendChild(crearCeldaFoto(contacto.foto));
+            fila.appendChild(crearCeldaFoto(contacto.imagen));
             fila.appendChild(crearCeldaBotones(contacto));
 
             // Agregar la fila

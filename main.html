@@ -2,10 +2,17 @@
 
   <div class="d-flex justify-content-center my-3">
     <!-- Botones superiores -->
-    <button type="button" class="btn btn-success m-2" onclick="crearTarjetasContactos();">Mostrar Contactos</button>    
-    <button type="button" class="btn btn-success m-2" onclick="crearTablaContactos();">Mostrar Contactos Tabla</button>
-    <button type="button" class="btn btn-primary m-2" onclick="abrirModalCrearContacto()">Crear Contacto</button>
-    <button type="button" class="btn btn-warning m-2" onclick="importarContactos()">+ 5</button>    
+    <button type="button" class="btn btn-success m-2" title="Mostrar Tarjetas" onclick="crearTarjetasContactos();">
+      <i class="bi bi-postcard"></i>
+    </button>
+    <button type="button" class="btn btn-success m-2" title="Mostrar Tabla" onclick="crearTablaContactos();">
+      <i class="bi bi-table"></i>
+    </button>
+    <button type="button" class="btn btn-primary m-2" title="Insertar nuevo Contacto"
+      onclick="abrirModalCrearContacto()">
+      <i class="bi bi-person-plus"></i>
+    </button>
+    <button type="button" class="btn btn-warning m-2" title="Importar Contactos" onclick="importarContactos()">+ 5</button>
   </div>
 
   <!-- Contactos -->
@@ -13,7 +20,7 @@
 
   <!-- Notificaciones -->
   <div class="div-notificaciones position-fixed bottom-0 end-0 p-3">
-    
+
     <div class="toast-container" id="contenedorNotificaciones">
       <!-- Aquí van las notificaciones -->
     </div>
@@ -21,7 +28,8 @@
   </div>
 
   <!-- Modal -->
-  <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal" aria-hidden="true">
+  <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
+    aria-hidden="true">
     <div class="modal-lg modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -37,24 +45,27 @@
                 <!-- DNI -->
                 <div class="mb-2">
                   <label for="dni" class="form-label">Número DNI</label>
-                  <input type="text" class="form-control" name="dni" id="dni" pattern="[\d]{8}" title="DNI debe tener 8 dígitos" required>
- 
+                  <input type="text" class="form-control" name="dni" id="dni" pattern="[\d]{8}"
+                    title="DNI debe tener 8 dígitos" required>
+
                 </div>
                 <!-- Nombres y Apellidos -->
                 <div class="mb-2">
                   <label for="nombre" class="form-label">Nombres y Apellidos</label>
-                  <input type="text" class="form-control" name="nombre" id="nombre" pattern="[\D]*" title="No puede contener números" required>
-  
+                  <input type="text" class="form-control" name="nombre" id="nombre" pattern="[\D]*"
+                    title="No puede contener números" required>
+
                 </div>
                 <!-- Correo -->
                 <div class="input-group mb-2">
                   <span class="input-group-text"><i class="bi bi-envelope-open"></i></span>
-                  <input type="email" class="form-control" name="correo" id="correo" required>   
+                  <input type="email" class="form-control" name="correo" id="correo" required>
                 </div>
                 <!-- Teléfono -->
                 <div class="input-group mb-2">
                   <span class="input-group-text"><i class="bi bi-telephone"></i></span>
-                  <input type="tel" class="form-control" name="telefono" id="telefono" pattern="[\d]{9,11}" title="Teléfono debe tener de 9 a 11 dígitos" required>
+                  <input type="tel" class="form-control" name="telefono" id="telefono" pattern="[\d]{9,11}"
+                    title="Teléfono debe tener de 9 a 11 dígitos" required>
                 </div>
                 <!-- Boleto -->
                 <div class="input-group mb-2">
@@ -63,13 +74,13 @@
                     <option selected>Seleccione Boleto...</option>
                     <option value="BOLETO GENERAL">Boleto General</option>
                     <option value="BOLETO VIP">Boleto VIP</option>
-                  </select>   
+                  </select>
                 </div>
                 <!-- Archivo de Foto -->
                 <div class="mb-2">
                   <label for="imagen" class="form-label">Selecciona una foto para el contacto</label>
                   <input type="file" accept="image/*" class="form-control" id="imagen" name="imagen">
-                </div>                                
+                </div>
               </div>
 
               <!-- Parte Derecha -->
@@ -77,11 +88,11 @@
                 <img class="img-fluid img-form" id="imgForm" alt="Foto de Contacto">
               </div>
 
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-            <button id="botonCrearModificar" type="submit" class="btn btn-success">Crear Contacto</button>
-          </div>
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+              <button id="botonCrearModificar" type="submit" class="btn btn-success">Crear Contacto</button>
+            </div>
         </form>
       </div>
     </div>
