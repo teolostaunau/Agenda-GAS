@@ -31,23 +31,20 @@
     });
 
     // Dragover
-    document.getElementById('imgForm').addEventListener('dragover', function(event)
-    {
-        event.preventDefault();        
+    document.getElementById('imgForm').addEventListener('dragover', function (event) {
+        event.preventDefault();
         this.style.filter = 'opacity(0%)';
         document.getElementById('cajaIconoForm').style.display = 'flex';
     });
 
     // Dragleave
-    document.getElementById('imgForm').addEventListener('dragleave', function(event)
-    {
+    document.getElementById('imgForm').addEventListener('dragleave', function (event) {
         this.style.filter = 'opacity(100%)';
-        document.getElementById('cajaIconoForm').style.display = 'none';        
+        document.getElementById('cajaIconoForm').style.display = 'none';
     });
 
     // Drop
-    document.getElementById('imgForm').addEventListener('drop', function(event)
-    {
+    document.getElementById('imgForm').addEventListener('drop', function (event) {
         event.preventDefault();
         let ficheros = event.dataTransfer.files;
 
@@ -59,7 +56,7 @@
 
         // Mostrar imagen y quitar zona de carga
         this.style.filter = 'opacity(100%)';
-        document.getElementById('cajaIconoForm').style.display = 'none';                
+        document.getElementById('cajaIconoForm').style.display = 'none';
     });
 
 
@@ -90,9 +87,9 @@
         if (archivo) subirImagenInsertar(contacto, archivo)
         else {
             google.script.run
-            .withSuccessHandler(contactoInsertadoCorrectamente)
-            .withFailureHandler(contactoInsertadoError)
-            .insertarContacto(contacto);
+                .withSuccessHandler(contactoInsertadoCorrectamente)
+                .withFailureHandler(contactoInsertadoError)
+                .insertarContacto(contacto);
         }
 
     }
@@ -110,13 +107,11 @@
         return contacto;
     }
 
-    function subirImagenInsertar(contacto, archivo)
-    {
+    function subirImagenInsertar(contacto, archivo) {
         let fr = new FileReader();
-        fr.readAsArrayBuffer(archivo); 
+        fr.readAsArrayBuffer(archivo);
 
-        fr.onload = function()
-        {
+        fr.onload = function () {
             let imagen =
             {
                 nombre: archivo.name,
@@ -124,9 +119,9 @@
                 datos: Array.from(new Int8Array(this.result))
             };
             google.script.run
-            .withSuccessHandler(contactoInsertadoCorrectamente)
-            .withFailureHandler(contactoInsertadoError)
-            .insertarContacto(contacto, imagen);            
+                .withSuccessHandler(contactoInsertadoCorrectamente)
+                .withFailureHandler(contactoInsertadoError)
+                .insertarContacto(contacto, imagen);
         };
     }
 
@@ -175,20 +170,18 @@
         if (archivo) subirImagenModificar(contacto, archivo)
         else {
             google.script.run
-            .withSuccessHandler(contactoModificadoCorrectamente)
-            .withFailureHandler(contactoModificadoError)
-            .modificarContacto(contacto);
+                .withSuccessHandler(contactoModificadoCorrectamente)
+                .withFailureHandler(contactoModificadoError)
+                .modificarContacto(contacto);
         }
 
     }
 
-    function subirImagenModificar(contacto, archivo)
-    {
+    function subirImagenModificar(contacto, archivo) {
         let fr = new FileReader();
-        fr.readAsArrayBuffer(archivo); 
+        fr.readAsArrayBuffer(archivo);
 
-        fr.onload = function()
-        {
+        fr.onload = function () {
             let imagen =
             {
                 nombre: archivo.name,
@@ -196,9 +189,9 @@
                 datos: Array.from(new Int8Array(this.result))
             };
             google.script.run
-            .withSuccessHandler(contactoModificadoCorrectamente)
-            .withFailureHandler(contactoModificadoError)
-            .modificarContacto(contacto,imagen);          
+                .withSuccessHandler(contactoModificadoCorrectamente)
+                .withFailureHandler(contactoModificadoError)
+                .modificarContacto(contacto, imagen);
         };
     }
 
@@ -258,6 +251,12 @@
         eliminarLoader();
         crearTablaContactos();
     }
+
+    // Habilitar PopOver
+    var popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+    var popoverList = popoverTriggerList.map(function (popoverTriggerEl) {
+        return new bootstrap.Popover(popoverTriggerEl)
+    })
 </script>
 
 
