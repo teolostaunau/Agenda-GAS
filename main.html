@@ -12,7 +12,8 @@
       onclick="abrirModalCrearContacto()">
       <i class="bi bi-person-plus"></i>
     </button>
-    <button type="button" class="btn btn-warning m-2" title="Importar Contactos" onclick="importarContactos()">+ 5</button>
+    <button type="button" class="btn btn-warning m-2" title="Importar Contactos" onclick="importarContactos()">+
+      5</button>
   </div>
 
   <!-- Contactos -->
@@ -27,7 +28,51 @@
 
   </div>
 
-  <!-- Modal -->
+  <!-- Modal Info Contacto -->
+  <div class="modal fade" id="infoContactoModal" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-body">
+          <div class="d-flex justify-content-center align-items-center flex-column">
+            <!-- Parte Superior -->
+            <div class="mb-3">
+              <h3 class="text-uppercase text-center fw-bold mb-2" id="nombreInfoContacto">Teo Lostaunau</h3>
+              <div class="d-flex align-items-center">
+                <i class="bi bi-card-heading me-2"></i>
+                <h5 class="me-4" id="dniInfoContacto">15422052</h5>
+                <i class="bi bi-clipboard boton-copiar" id="copiarDNI"></i>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="bi bi-envelope-fill me-2"></i>
+                <h5 class="me-4" id="correoInfoContacto">teo.lostaunau@gmail.com</h5>
+                <i class="bi bi-clipboard boton-copiar" id="copiarCorreo"></i>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="bi bi-telephone-fill me-2"></i>
+                <h5 class="me-4" id="telefonoInfoContacto"></h5>
+                <i class="bi bi-clipboard boton-copiar" id="copiarTelefono"></i>
+              </div>
+              <div class="d-flex align-items-center">
+                <i class="bi bi-ticket-detailed me-2"></i>
+                <h5 class="me-4" id="boletoInfoContacto"></h5>
+                <i class="bi bi-clipboard boton-copiar" id="copiarBoleto"></i>
+              </div>
+            </div>
+
+            <!-- Parte Inferior -->
+            <div class="mb-3">
+              <img class="img-fluid border border-4 rounded" id="imgInfoContacto" alt="Vista previa">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal Editar Contacto -->
   <div class="modal fade" id="crearContactoModal" tabindex="-1" aria-labelledby="tituloCrearContactoModal"
     aria-hidden="true">
     <div class="modal-lg modal-dialog">
@@ -83,7 +128,9 @@
 
               <!-- Parte Derecha -->
               <div class="div-img-form">
-                <i class="icono-form bi bi-question-circle-fill btn" data-bs-toggle="popover" data-bs-content="Se recomienda no joder en horas de trabajo. Colocar imágenes cuadradas para una mejor visualización. Resolución recomendada 352x352" data-bs-trigger="hover"></i>
+                <i class="icono-form bi bi-question-circle-fill btn" data-bs-toggle="popover"
+                  data-bs-content="Se recomienda no joder en horas de trabajo. Colocar imágenes cuadradas para una mejor visualización. Resolución recomendada 352x352"
+                  data-bs-trigger="hover"></i>
                 <img class="img-fluid img-form" id="imgForm" alt="Foto de Contacto">
                 <div class="caja-icono-form container-fluid" id="cajaIconoForm">
                   <i class="icono-img-form bi bi-cloud-plus"></i>
@@ -99,4 +146,5 @@
       </div>
     </div>
   </div>
+
 </main>

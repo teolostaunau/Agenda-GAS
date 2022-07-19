@@ -1,8 +1,10 @@
 <script>
-        function crearBotonInfoContacto(contacto) {
+    function crearBotonInfoContacto(contacto) {
         let botonInfo = document.createElement('button');
-        botonInfo.id = 'botonInfo'+contacto.fila;
+        botonInfo.id = 'botonInfo' + contacto.fila;
         botonInfo.classList.add('btn', 'btn-success', 'm-1');
+        botonInfo.onclick = () => abrirModalInfoContacto(contacto);
+        botonInfo.title = "Mostrar información de Contacto";
 
         let iconoBoton = document.createElement('i');
         iconoBoton.classList.add('bi', 'bi-info-square-fill');
@@ -16,10 +18,10 @@
         let botonBorrar = document.createElement('button');
         botonBorrar.onclick = () => borrarContacto(contacto.fila);
         botonBorrar.classList.add('btn', 'btn-danger', 'm-1');
+        botonBorrar.title = "Eliminar Contacto";
 
         let iconoBoton = document.createElement('i');
         iconoBoton.classList.add('bi', 'bi-trash')
-
         botonBorrar.appendChild(iconoBoton);
 
         return botonBorrar;
@@ -30,6 +32,7 @@
         let botonModificar = document.createElement('button');
         botonModificar.classList.add('btn', 'btn-warning', 'm-1');
         botonModificar.onclick = () => abrirModalModificarContacto(contacto);
+        botonModificar.title = "Modificar Información de Contacto";
 
         let iconoBoton = document.createElement('i');
         iconoBoton.classList.add('bi', 'bi-pencil-square')

@@ -42,15 +42,41 @@
         document.getElementById('formulario').onsubmit = () => modificarContacto(datosContacto.fila);
 
         // Obtener datos
-        document.getElementById('dni').value = datosContacto.dni; 
-        document.getElementById('nombre').value = datosContacto.nombre; 
-        document.getElementById('correo').value = datosContacto.correo; 
-        document.getElementById('telefono').value = datosContacto.telefono; 
-        document.getElementById('boleto').value = datosContacto.boleto; 
-        document.getElementById('imagen').value = '';        
+        document.getElementById('dni').value = datosContacto.dni;
+        document.getElementById('nombre').value = datosContacto.nombre;
+        document.getElementById('correo').value = datosContacto.correo;
+        document.getElementById('telefono').value = datosContacto.telefono;
+        document.getElementById('boleto').value = datosContacto.boleto;
+        document.getElementById('imagen').value = '';
         document.getElementById('imgForm').src = datosContacto.imagen;
 
         // Abrir Modal
         bootstrap.Modal.getOrCreateInstance(document.getElementById('crearContactoModal')).show();
+    }
+
+    function abrirModalInfoContacto(contacto) {
+        // Obtener datos
+        document.getElementById('dniInfoContacto').textContent = contacto.dni;
+        document.getElementById('nombreInfoContacto').textContent = contacto.nombre;
+        document.getElementById('correoInfoContacto').textContent = contacto.correo;
+        document.getElementById('telefonoInfoContacto').textContent = contacto.telefono;
+        document.getElementById('boletoInfoContacto').textContent = contacto.boleto;
+        document.getElementById('imgInfoContacto').src = contacto.imagen;
+
+        // Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('infoContactoModal')).show();
+    }
+
+    function abrirModalNuevo(contacto) {
+        // Obtener datos
+        document.getElementById('dniInfoContacto').textContent = contacto.dni;
+        document.getElementById('nombreInfoContacto').textContent = contacto.nombre;
+        document.getElementById('correoInfoContacto').textContent = contacto.correo;
+        document.getElementById('telefonoInfoContacto').textContent = contacto.telefono;
+        document.getElementById('boletoInfoContacto').textContent = contacto.boleto;
+        document.getElementById('imgInfoContacto').src = contacto.imagen;
+                
+        // Abrir Modal
+        bootstrap.Modal.getOrCreateInstance(document.getElementById('infoContactoModal')).show();
     }
 </script>
