@@ -1,0 +1,46 @@
+<script>
+    function crearTarjetasCuadradas() {
+        limpiar();
+
+        google.script.run
+            .withSuccessHandler(crearTarjetasCuadradasCorrectamente)
+            .withFailureHandler(crearTarjetasError)
+            .obtenerDatos();
+    }
+
+
+    function crearTarjetasCuadradasCorrectamente(datos) {
+        // Extraer Contactos
+        let contactos = extraerContactos(datos);
+
+        let tarjetas = document.createElement('div');
+        tarjetas.id = 'tarjetasContactos';
+        tarjetas.classList.add('d-flex', 'justify-content-center', 'flex-wrap');
+
+        // Por cada contacto, crear Tarjeta
+        contactos.forEach(contacto => tarjetas.appendChild(crearContactoPlantilla(contacto)));
+
+        // Agregar tarjetas
+        document.getElementById('divContactos').appendChild(tarjetas);
+
+        // Eliminamos loader
+        eliminarLoader();
+    }
+
+    function crearContactoPlantilla(contacto) {
+        let plantilla = document.getElementById('plantillaContacto');
+        let copia = document.importNode(plantilla.content, true);
+
+        copia.getElementById('plantillaNumero').id = 'tarjeta'+contacto.fila;
+        copia.getElementById('plantillaNombre').textContent = contacto.nombre;
+        copia.getElementById('plantillaImagen').src = contacto.imagen;        
+
+        // Botones
+        copia.getElementById('plantillaInfo').onclick = () => abrirModalInfoContacto(contacto);
+        copia.getElementById('plantillaEditar').onclick = () => abrirModalModificarContacto(contacto);
+        copia.getElementById('plantillaBorrar').onclick = () => borrarContacto(contacto.fila);        
+
+        return copia;
+    }
+
+</script>
