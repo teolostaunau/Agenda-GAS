@@ -56,7 +56,7 @@
 
     function abrirModalInfoContacto(contacto) {
         // Obtener datos
-        document.getElementById('dniInfoContacto').textContent = contacto.dni;
+        document.getElementById('dniInfoContacto').textContent = "DNI: " + contacto.dni;
         document.getElementById('nombreInfoContacto').textContent = contacto.nombre;
         document.getElementById('correoInfoContacto').textContent = contacto.correo;
         document.getElementById('telefonoInfoContacto').textContent = contacto.telefono;
@@ -67,16 +67,4 @@
         bootstrap.Modal.getOrCreateInstance(document.getElementById('infoContactoModal')).show();
     }
 
-    function abrirModalNuevo(contacto) {
-        // Obtener datos
-        document.getElementById('dniInfoContacto').textContent = contacto.dni;
-        document.getElementById('nombreInfoContacto').textContent = contacto.nombre;
-        document.getElementById('correoInfoContacto').textContent = contacto.correo;
-        document.getElementById('telefonoInfoContacto').textContent = contacto.telefono;
-        document.getElementById('boletoInfoContacto').textContent = contacto.boleto;
-        document.getElementById('imgInfoContacto').src = contacto.imagen;
-                
-        // Abrir Modal
-        bootstrap.Modal.getOrCreateInstance(document.getElementById('infoContactoModal')).show();
-    }
 </script>
