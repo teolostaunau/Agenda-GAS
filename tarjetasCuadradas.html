@@ -40,6 +40,17 @@
         copia.getElementById('plantillaEditar').onclick = () => abrirModalModificarContacto(contacto);
         copia.getElementById('plantillaBorrar').onclick = () => borrarContacto(contacto.fila);        
 
+        let loader = copia.getElementById('plantillaLoader');
+        let tarjeta = copia.getElementById('tarjeta'+contacto.fila);
+
+        tarjeta.style.display = 'none';
+
+        // Evento finalizar carga imagen
+        copia.getElementById('plantillaImagen').onload = () => {
+            loader.remove();
+            tarjeta.style.display = 'inline';
+        }
+
         return copia;
     }
 
