@@ -11,6 +11,12 @@
     const LOTTIE_AVION = 'https://assets3.lottiefiles.com/packages/lf20_x62chJ.json';
     const LOTTIE_CIRCULOS = 'https://assets5.lottiefiles.com/packages/lf20_Xho5ht.json';
 
+    const ESTILO_CUADRADO = 'Cuadrado';
+    const ESTILO_TARJETA = 'Tarjeta';
+    const ESTILO_TABLA = 'Tabla';
+
+    let estiloActual = ESTILO_TABLA;
+
     //
     // EVENTOS
     //
@@ -114,9 +120,18 @@
         crearLoaderLottie('divContactos', LOTTIE_AVION);
     }
 
+    function mostrar() {
+        
+        switch(estiloActual){
+            case ESTILO_CUADRADO: crearTarjetasCuadradas(); break; 
+            case ESTILO_TARJETA: crearTarjetasContactos(); break;            
+            case ESTILO_TABLA: crearTablaContactos(); break;                        
+        }
+        eliminarLoader();
+    }
+
     // INSERTAR CONTACTO
     function insertarContacto() {
-
         limpiar();
 
         // Cerrar Modal
@@ -133,7 +148,6 @@
                 .withFailureHandler(contactoInsertadoError)
                 .insertarContacto(contacto);
         }
-
     }
 
     function guardarDatosContacto() {
@@ -145,7 +159,6 @@
             boleto: document.getElementById('boleto').value,
             imagen: document.getElementById('imgForm').src
         };
-
         return contacto;
     }
 
@@ -178,11 +191,7 @@
         // Insertar Notificación
         crearNotificacionContacto('Contacto insertado correctamente', 'CONTACTO OK');
 
-        // Eliminar Loader
-        eliminarLoader();
-
-        // Mostrar Tabla
-        crearTablaContactos();
+        mostrar()
     }
 
     function contactoInsertadoError() {
@@ -239,8 +248,7 @@
 
     function contactoModificadoCorrectamente() {
         crearNotificacionContacto('Contacto Modificado correctamente', 'MODIFICADO OK');
-        eliminarLoader();
-        crearTablaContactos();
+        mostrar();
     }
 
     function contactoModificadoError() {
@@ -262,8 +270,7 @@
 
     function contactoBorradoCorrectamente() {
         crearNotificacionBorrar('Contacto eliminado correctamente', 'BORRADO OK');
-        eliminarLoader();
-        crearTablaContactos();
+        mostrar();
     }
 
     function contactoBorradoError() {
@@ -284,8 +291,7 @@
 
     function contactosImportadosCorrectamente() {
         crearNotificacionBorrar('Contactos importados correctamente', 'IMPORTACIÓN OK');
-        eliminarLoader();
-        crearTablaContactos();
+        mostrar();
     }
 
     function contactosImportadosError() {
