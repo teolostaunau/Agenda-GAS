@@ -1,23 +1,4 @@
 <script>
-    function extraerContactos(datos)
-    {
-        let contactos = [];
-        for(let i = 1; i < datos.length; i++)
-        {
-            let contacto =
-            {
-                dni: datos[i][0],
-                nombre: datos[i][1],
-                correo: datos[i][2],
-                telefono: datos[i][3],
-                boleto: datos[i][4],
-                imagen: datos[i][5],
-                fila: i+1
-            };
-            contactos.push(contacto);
-        }
-        return contactos;
-    }
 
     function extraerColumnas(datos)
     {

@@ -76,6 +76,7 @@
     height: 4rem;
   }
 
+
   /* Clases Formulario */
 
   .div-datos-form {
@@ -144,14 +145,12 @@
   .boton-copiar {
     margin-left: auto;
     font-size: 1.5rem;
-
   }
 
   .boton-copiar:hover {
     color: var(--color-verde-oscuro);
     transform: scale(1.2);
   }
-
 
   .img-info-contacto {
     height: 20rem;
@@ -162,6 +161,39 @@
     padding: 0.3rem;
     background-color: white;
   }
+
+
+  /* ESTILO 1 */
+  .caja-estilo-1 .caja-contacto {
+    border: 0.3rem solid whitesmoke;
+  }
+
+  /* ESTILO 2 */
+  .caja-estilo-2 .caja-contacto {
+    overflow: hidden;
+  }
+
+  /* ESTILO 3 */
+  .caja-estilo-3 .caja-contacto {
+    overflow: hidden;
+  }
+  .caja-estilo-3 .datos-contacto {
+    height: 100%;
+    width: 50%;
+    transform: scaleX(0);
+    transform-origin: 0 0;
+    transition: 0.5s;
+  }
+  .caja-estilo-3 .caja-contacto:hover .datos-contacto {
+    transform: scaleX(1);
+    z-index: 2;
+  }
+  .caja-estilo-3 .caja-contacto:hover img {
+    transform: translateX(30%) scale(1.1);
+    filter: grayscale(100%);
+  }
+
+
 
   /* ESTILOS ADICIONALES */
 

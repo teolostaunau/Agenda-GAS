@@ -1,7 +1,7 @@
 <script>
-    //
+    /////////////////////
     // CONSTANTES
-    //
+    /////////////////////
     const ICONO_CHECK = 'bi-check2-square';
     const ICONO_PAPELERA = 'bi-trash';
     const ICONO_CONTACTO = 'bi-person-plus-fill';
@@ -11,15 +11,40 @@
     const LOTTIE_AVION = 'https://assets3.lottiefiles.com/packages/lf20_x62chJ.json';
     const LOTTIE_CIRCULOS = 'https://assets5.lottiefiles.com/packages/lf20_Xho5ht.json';
 
-    const ESTILO_CUADRADO = 'Cuadrado';
-    const ESTILO_TARJETA = 'Tarjeta';
+    const ESTILO_FILA = 'Fila';
     const ESTILO_TABLA = 'Tabla';
+
+    const ESTILO_TARJETA_1 = 'plantillaContacto1';
+    const ESTILO_TARJETA_2 = 'plantillaContacto2';
+    const ESTILO_TARJETA_3 = 'plantillaContacto3';
 
     let estiloActual = ESTILO_TABLA;
 
-    //
+    //////////////////////
     // EVENTOS
-    //
+    //////////////////////
+
+    // Inicio
+    window.addEventListener('load', function () {
+        mostrar();
+    })
+
+    // Eventos Botones Estilos de Tarjetas
+    document.getElementById('tarjetasEstilo1').addEventListener("click", function (event) {
+        estiloActual = ESTILO_TARJETA_1;
+        crearTarjetasCuadradas()
+    });
+
+    document.getElementById('tarjetasEstilo2').addEventListener("click", function (event) {
+        estiloActual = ESTILO_TARJETA_2;
+        crearTarjetasCuadradas()
+    });
+
+    document.getElementById('tarjetasEstilo3').addEventListener("click", function (event) {
+        estiloActual = ESTILO_TARJETA_3;
+        crearTarjetasCuadradas()
+    });
+
 
     // Botón Subir
     window.addEventListener('scroll', function () {
@@ -121,13 +146,23 @@
     }
 
     function mostrar() {
-        
-        switch(estiloActual){
-            case ESTILO_CUADRADO: crearTarjetasCuadradas(); break; 
-            case ESTILO_TARJETA: crearTarjetasContactos(); break;            
-            case ESTILO_TABLA: crearTablaContactos(); break;                        
+        switch (estiloActual) {
+            case ESTILO_FILA: crearTarjetasContactos(); break;
+            case ESTILO_TABLA: crearTablaContactos(); break;
+            case ESTILO_TARJETA_1: crearTarjetasCuadradas(); break;
+            case ESTILO_TARJETA_2: crearTarjetasCuadradas(); break;
+            case ESTILO_TARJETA_3: crearTarjetasCuadradas(); break;
+            case Default: crearTarjetasCuadradas(); break;
         }
         eliminarLoader();
+    }
+
+    function extraerContactos(datos) {
+        let contactos = [];
+        for (let i = 1; i < datos.length; i++) {
+            contactos.push(new Contacto(datos[i][0], datos[i][1], datos[i][2], datos[i][3], datos[i][4], datos[i][5], i + 1));
+        }
+        return contactos;
     }
 
     // INSERTAR CONTACTO
@@ -179,7 +214,6 @@
                 .insertarContacto(contacto, imagen);
         };
     }
-
 
     function contactoInsertadoCorrectamente() {
         // Eliminamos datos de los Inputs
@@ -257,7 +291,6 @@
         crearTablaContactos();
     }
 
-
     // BORRAR CONTACTO
     function borrarContacto(numFila) {
         limpiar();
@@ -275,8 +308,7 @@
 
     function contactoBorradoError() {
         crearNotificacionError('No se ha podido borrar el Contacto', 'ERROR');
-        eliminarLoader();
-        crearTablaContactos();
+        mostrar();
     }
 
     // IMPORTAR CONTACTOS
@@ -313,25 +345,3 @@
     // })
 
 </script>
-
-
-
-<!-- // Array.from(obj).forEach((filaActual,i) =>
-    // {
-    //     let fila =document.createElement('tr');
-    //     filaActual.forEach(celdaActual =>
-    //     {
-    //         let celda = document.createElement('td');
-    //         celda.textContent = celdaActual;
-    //         fila.appendChild(celda);
-    //     });
-    //     if(i == 0)
-    //     {
-    //         tablaHeader.appendChild(fila);
-    //         tabla.appendChild(tablaHeader);
-    //     }
-    //     else
-    //     {
-    //         tablaBody.appendChild(fila);
-    //     }
-    // }); -->

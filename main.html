@@ -1,14 +1,23 @@
 <main>
   <!-- Botones Superiores -->
-  <div class="d-flex justify-content-center my-3">
+  <div class="d-flex justify-content-center align-items-center my-3">
+
     <!-- Botones superiores -->
-    <button type="button" class="btn btn-success m-2" title="Tarjetas Cuadradas" onclick="crearTarjetasCuadradas();">
-      <i class="bi bi-person-square"></i>
-    </button>    
-    <button type="button" class="btn btn-success m-2" title="Mostrar Tarjetas" onclick="crearTarjetasContactos();">
+    <div class="dropdown">
+      <button class="btn btn-success dropdown-toggle" type="button" id="desplegableEstilos" data-bs-toggle="dropdown" aria-expanded="false">
+        <i class="bi bi-person-square"></i>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="desplegableEstilos">
+        <li><a class="dropdown-item" id="tarjetasEstilo1">Tarjeta Estilo 1</a></li>
+        <li><a class="dropdown-item" id="tarjetasEstilo2">Tarjeta Estilo 2</a></li>
+        <li><a class="dropdown-item" id="tarjetasEstilo3">Tarjeta Estilo 3</a></li>
+      </ul>
+    </div>
+
+    <button type="button" class="btn btn-success m-2" title="Mostrar en Filas" onclick="crearTarjetasContactos();">
       <i class="bi bi-postcard"></i>
     </button>
-    <button type="button" class="btn btn-success m-2" title="Mostrar Tabla" onclick="crearTablaContactos();">
+    <button type="button" class="btn btn-success m-2" title="Mostrar en Tabla" onclick="crearTablaContactos();">
       <i class="bi bi-table"></i>
     </button>
     <button type="button" class="btn btn-primary m-2" title="Insertar nuevo Contacto"
@@ -148,24 +157,4 @@
     </div>
   </div>
 
-  <!-- Plantilla Contacto 1 -->
-  <template id="plantillaContacto">
-    <div id="plantillaLoader" class="my-5 mx-2 plantilla-loader">
-      <p>Cargando imagen</p>
-      <div class="lds-facebook"><div></div><div></div><div></div></div>
-    </div>
-    <div id="plantillaNumero" class="my-5 mx-2">
-      <div class="caja-contacto">
-        <img id="plantillaImagen" alt="Imagen del Contacto">
-        <div class="datos-contacto">
-          <h3 id="plantillaNombre"></h3>
-          <span>
-            <a id="plantillaInfo" class="boton-caja btn btn-success"><i class="bi bi-info-square-fill"></i></a>
-            <a id="plantillaEditar" class="boton-caja btn btn-warning"><i class="bi bi-pencil-square"></i></a>
-            <a id="plantillaBorrar" class="boton-caja btn btn-danger"><i class="bi bi-trash"></i></a>                        
-          </span>
-        </div>
-      </div>
-    </div>
-  </template>
 </main>
