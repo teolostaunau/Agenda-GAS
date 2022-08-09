@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <base target="_top">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=width-device, initial-scale=1.0">
+    
+    <!-- Archivos CSS y BootStrap -->
+    <?!= obtenerDatosHTML('css'); ?>
+
+</head>
+<body>
+
+    <!-- HEADER -->
+    <?!= obtenerDatosHTML('header'); ?>
+
+    <!-- MAIN -->
+    <?!= obtenerDatosHTML('main'); ?>    
+
+    <!-- FOOTER -->
+    <?!= obtenerDatosHTML('footer'); ?>
+    
+    <!-- Javascript -->
+    <?!= obtenerDatosHTML('js'); ?>    
+    <?!= obtenerDatosHTML('Contacto'); ?>        
+    <?!= obtenerDatosHTML('botonesContacto'); ?>        
+    <?!= obtenerDatosHTML('notificaciones'); ?>    
+    <?!= obtenerDatosHTML('filas'); ?>        
+    <?!= obtenerDatosHTML('tarjetasCuadradas'); ?>            
+    <?!= obtenerDatosHTML('tablas'); ?>        
+    <?!= obtenerDatosHTML('loaders'); ?>        
+    <?!= obtenerDatosHTML('plantillas'); ?>            
+</body>
+</html>

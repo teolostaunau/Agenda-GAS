@@ -1,0 +1,136 @@
+<script>
+
+    function extraerColumnas(datos)
+    {
+        let columnas = [];
+        for(let i = 0; i<datos[0].length; i++)
+        {
+            columnas.push(datos[0][i]);
+        }
+        columnas.push('OPCIONES');
+        return columnas;
+    }
+
+    function eliminarTabla() {
+        let tabla = document.getElementById('tablaContactos');
+        if (tabla) tabla.remove();
+    }
+
+   function crearTablaContactos() {
+        limpiar();
+
+        google.script.run
+            .withSuccessHandler(crearTablaContactosCorrectamente)
+            .withFailureHandler(crearTablaContactosError)
+            .obtenerDatos();
+    }
+
+    function crearTablaContactosCorrectamente(datos) {
+        Contacto.estiloActual = Contacto.ESTILO_TABLA;
+        // Extraear Contactos y Columnas
+        let contactos = extraerContactos(datos);
+        let columnas = extraerColumnas(datos);
+
+        // Crear la Tabla
+        tabla = document.createElement('table');
+        tabla.id = 'tablaContactos';
+
+        // Crear la Cabecera y Agragar a la Tabla
+        tabla.appendChild(crearHeaderTabla(columnas));
+
+        // Crear el Cuerpo y Agregar a la Tabla
+        tabla.appendChild(crearBodyTabla(contactos));
+
+        // Estilo a la Tabla
+        tabla.classList.add('table', 'table-striped', 'border', 'border-4');
+
+        // Agregamos tabla a la página
+        document.getElementById('divContactos').appendChild(tabla);
+
+        // Eliminamos Loader
+        eliminarLoader();
+    }
+    
+    function crearHeaderTabla(columnas)
+    {
+        let tablaHeader = document.createElement('thead');
+        // Agregamos clases a la cabecera
+        tablaHeader.classList.add('table-dark');
+
+        // Creamos fila del Header de la Tabla
+        let primeraFila = document.createElement('tr');
+
+        // Agregar columnas
+        columnas.forEach(columna => {
+            let celda = document.createElement('td');
+            celda.textContent = columna;
+            primeraFila.appendChild(celda);
+        });
+
+        // Agregar fila al Header
+        tablaHeader.appendChild(primeraFila);
+
+        return tablaHeader;
+    }
+
+    function crearBodyTabla(contactos)
+    {
+        let tablaBody = document.createElement('tbody');
+
+        contactos.forEach(contacto => {
+            let fila = document.createElement('tr');
+
+            // Crear celdas y Agregar las celdas
+            fila.appendChild(crearCelda(contacto.dni));
+            fila.appendChild(crearCelda(contacto.nombre));
+            fila.appendChild(crearCelda(contacto.correo));
+            fila.appendChild(crearCelda(contacto.telefono));
+            fila.appendChild(crearCelda(contacto.boleto));
+            fila.appendChild(crearCeldaFoto(contacto.imagen));
+            fila.appendChild(crearCeldaBotones(contacto));
+
+            // Agregar la fila
+            tablaBody.appendChild(fila);
+        });
+
+        return tablaBody;
+    }
+
+    function crearCelda(dato)
+    {
+        let celda = document.createElement('td');
+        celda.textContent = dato;
+        return celda;
+    }
+
+    function crearCeldaFoto(rutaFoto)
+    {
+        let celda = document.createElement('td');
+
+        let imagen = document.createElement('img');
+        imagen.classList.add('img-fluid', 'rounded','img-tabla');
+        imagen.src = rutaFoto;
+        celda.appendChild(imagen);
+
+        return celda;
+    }
+
+    function crearTablaContactosError() {
+        // Mostrar notificación de Error
+        crearNotificacionError('Problemas al cargar Contactos', 'ERROR');
+        // Eliminamos Loader
+        eliminarLoader();
+    }    
+
+    function crearCeldaBotones(contacto) {
+        // Crear celda
+        let celda = document.createElement('td');
+        celda.classList.add('text-center');
+
+        celda.appendChild(crearBotonInfoContacto(contacto));
+        celda.appendChild(crearBotonBorrarContacto(contacto));
+        celda.appendChild(crearBotonModificarContacto(contacto));
+
+        return celda;
+    }    
+</script>

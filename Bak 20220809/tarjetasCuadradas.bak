@@ -1,0 +1,39 @@
+<script>
+    function eliminarTarjetasCuadradas() {
+        let tarjeta = document.getElementById('tarjetasContactos');
+        if (tarjeta) tarjeta.remove();
+    }
+
+    function crearTarjetasCuadradas() {
+        limpiar();
+
+        google.script.run
+            .withSuccessHandler(crearTarjetasCuadradasCorrectamente)
+            .withFailureHandler(crearTarjetasCuadradasError)
+            .obtenerDatos();
+    }
+
+    function crearTarjetasCuadradasError() {
+        crearNotificacionError('No se han podido cargar las Tarjetas', 'ERROR');
+        eliminarLoader();
+    }
+
+    function crearTarjetasCuadradasCorrectamente(datos) {
+        // Extraer Contactos
+        let contactos = extraerContactos(datos);
+
+        let tarjetas = document.createElement('div');
+        tarjetas.id = 'tarjetasContactos';
+        tarjetas.classList.add('d-flex', 'justify-content-center', 'flex-wrap');
+
+        // Por cada contacto, crear Tarjeta
+        contactos.forEach(contacto => tarjetas.appendChild(contacto.crearContactoPlantilla()));
+
+        // Agregar tarjetas
+        document.getElementById('divContactos').appendChild(tarjetas);
+
+        // Eliminamos loader
+        eliminarLoader();
+    }
+
+</script>

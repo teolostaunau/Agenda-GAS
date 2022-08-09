@@ -1,0 +1,29 @@
+<script>
+    function crearBotonBorrarContacto(contacto) {
+
+        let botonBorrar = document.createElement('button');
+        botonBorrar.onclick = () => borrarContacto(contacto.fila);
+        botonBorrar.classList.add('btn', 'btn-danger', 'm-1');
+        botonBorrar.title = "Eliminar Contacto";
+
+        let iconoBoton = document.createElement('i');
+        iconoBoton.classList.add('bi', 'bi-trash')
+        botonBorrar.appendChild(iconoBoton);
+
+        return botonBorrar;
+    }
+
+    function crearBotonModificarContacto(contacto) {
+
+        let botonModificar = document.createElement('button');
+        botonModificar.classList.add('btn', 'btn-warning', 'm-1');
+        botonModificar.onclick = () => abrirModalModificarContacto(contacto);
+        botonModificar.title = "Modificar Información de Contacto";
+
+        let iconoBoton = document.createElement('i');
+        iconoBoton.classList.add('bi', 'bi-pencil-square')
+        botonModificar.appendChild(iconoBoton);
+
+        return botonModificar;
+    }
+</script>
